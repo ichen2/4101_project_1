@@ -10,21 +10,22 @@ class TokenType(Enum) :
     INT = 7
     STRING = 8
     IDENT = 9
+    
 class Token :
     def __init__(self, TokenType) :
         self.tt = TokenType
 
 class IntToken(Token) :
-    def __init__(self, TokenType, value) :
-        self.tt = TokenType
+    def __init__(self, value) :
+        self.tt = TokenType.INT
         self.intVal = value
 
 class StringToken(Token) :
-    def __init__(self, TokenType, value) :
-        self.tt = TokenType
+    def __init__(self, value) :
+        self.tt = TokenType.STRING
         self.stringVal = value
 
 class IdentToken(Token) :
-    def __init__(self, TokenType, value) :
-        self.tt = TokenType
+    def __init__(self, value) :
+        self.tt = TokenType.IDENT
         self.identVal = value
