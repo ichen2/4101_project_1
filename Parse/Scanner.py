@@ -42,7 +42,14 @@ class Scanner:
             # Return None on EOF
             if ch == "":
                 return None
-    
+                
+            elif ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or " ":
+                while ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or " ":
+                    ch = self.read()
+            elif ch == ";":
+                while ch != "\n":
+                    ch = self.read()
+                
             # Special characters
             elif ch == '\'':
                 return Token(TokenType.QUOTE)
@@ -72,18 +79,19 @@ class Scanner:
 
             # String constants
             elif ch == '"':
+                string = ""
                 self.buf = []
-                # TODO: scan a string into the buffer variable buf
-    
+                while self.peek() != "\"":
+                    self.buf += self.read()
+                self.ch_buf = None
                 return StrToken("".join(self.buf))
 
             # Integer constants
             elif self.isDigit(ch):
                 i = ord(ch) - ord('0')
-                # TODO: scan the number and convert it to an integer
-
-                # make sure that the character following the integer
-                # is not removed from the input stream
+                while self.peek().isNumeric():
+                    i = i * 10
+                    i +=  ord(self.read()) - ord('0')
                 return IntToken(i)
     
             # Identifiers
