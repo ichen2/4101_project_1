@@ -78,8 +78,7 @@ class Scanner:
                     return self.getNextToken()
 
             # String constants
-            elif ch == '"':
-                string = ""
+            elif ch == '\"':
                 self.buf = []
                 while self.peek() != "\"":
                     self.buf += self.read()
@@ -99,9 +98,11 @@ class Scanner:
                 # or ch is some other vaid first character
                 # for an identifier
                 self.buf = []
-                # TODO: scan an identifier into the buffer variable buf
-
-
+                p = self.peek()
+                while p >= 'A' and p <= 'z':
+                    self.buf += self.read()
+                    p = self.peek()
+                self.ch_buf = None
                 # make sure that the character following the identifier
                 # is not removed from the input stream
                 return IdentToken("".join(self.buf))
