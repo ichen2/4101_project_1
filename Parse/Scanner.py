@@ -88,12 +88,13 @@ class Scanner:
             # Integer constants
             elif self.isDigit(ch):
                 i = ord(ch) - ord('0')
-                while self.peek().isNumeric():
+                while self.peek().isDigit():
                     i = i * 10
                     i +=  ord(self.read()) - ord('0')
                 return IntToken(i)
     
             # Identifiers
+            # TODO: this elif statement is just a placeholder. identifiers can start with more than letters, so we'll have to change it to check for those.
             elif ch >= 'A' and ch <= 'Z':
                 # or ch is some other vaid first character
                 # for an identifier
