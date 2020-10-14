@@ -55,10 +55,8 @@ class Scanner:
                 
             # Special characters
             elif ch == '\'':
-                print(4)
                 return Token(TokenType.QUOTE)
             elif ch == '(':
-                print(5)
                 return Token(TokenType.LPAREN)
             elif ch == ')':
                 return Token(TokenType.RPAREN)
@@ -93,7 +91,7 @@ class Scanner:
             # Integer constants
             elif self.isDigit(ch):
                 i = ord(ch) - ord('0')
-                while self.peek().isDigit():
+                while self.isDigit(self.peek()):
                     i = i * 10
                     i +=  ord(self.read()) - ord('0')
                 return IntToken(i)
