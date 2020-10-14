@@ -41,18 +41,15 @@ class Scanner:
 
             # Return None on EOF
             if ch == "":
-                print(1)
+                return None
 
-            elif ch == "\n":
+            elif ch == "\n" or ch == " ":
                 return self.getNextToken()
-            #elif ch == "\n" or ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or ch == " ":
-            #    while ch == "\n" or ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or ch == " ":
-            #        ch = self.read()
-            #        print(ch)
-            #elif ch == ";":
-            #    print(3)
-            #    while ch != "\n":
-            #        ch = self.read()
+
+            elif ch == ";":                
+                while(not ch == "\n"):
+                    ch = self.read()
+                return self.getNextToken()
                 
             # Special characters
             elif ch == '\'':
