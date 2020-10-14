@@ -35,6 +35,8 @@
 
 import sys
 from Tokens import TokenType
+# gerald said to import these
+from Tree import *
 
 class Parser:
     def __init__(self, s):

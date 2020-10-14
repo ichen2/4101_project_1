@@ -2,6 +2,8 @@
 
 from Tree import Node
 from Tree import Ident
+# gerald said to import these
+from Special import *
 
 class Cons(Node):
     def __init__(self, a, d):

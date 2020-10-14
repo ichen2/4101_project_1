@@ -41,19 +41,25 @@ class Scanner:
 
             # Return None on EOF
             if ch == "":
-                return None
-                
-            elif ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or " ":
-                while ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or " ":
-                    ch = self.read()
-            elif ch == ";":
-                while ch != "\n":
-                    ch = self.read()
+                print(1)
+
+            elif ch == "\n":
+                return self.getNextToken()
+            #elif ch == "\n" or ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or ch == " ":
+            #    while ch == "\n" or ch == "\t" or ch == "\v" or ch == "\f" or ch == "\r" or ch == " ":
+            #        ch = self.read()
+            #        print(ch)
+            #elif ch == ";":
+            #    print(3)
+            #    while ch != "\n":
+            #        ch = self.read()
                 
             # Special characters
             elif ch == '\'':
+                print(4)
                 return Token(TokenType.QUOTE)
             elif ch == '(':
+                print(5)
                 return Token(TokenType.LPAREN)
             elif ch == ')':
                 return Token(TokenType.RPAREN)
@@ -110,6 +116,7 @@ class Scanner:
 
             # Illegal character
             else:
+                print("end")
                 sys.stderr.write("Illegal input character '" + ch + "'\n")
                 return self.getNextToken()
 
