@@ -97,7 +97,6 @@ class Scanner:
                 return IntToken(i)
     
             # Identifiers
-            # TODO: this elif statement is just a placeholder. identifiers can start with more than letters, so we'll have to change it to check for those.
             elif (ch >= 'A' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or ch == '!' or ch == '$' or ch ==  '%' or ch ==  '&' or ch == '*' or ch =='+' or ch == '-' or ch == '.' or ch == '/' or ch == ':' or ch == '<' or ch ==  '=' or ch == '>' or ch == '?' or ch == '@' or ch == '^'  or ch == '_' or ch == '~' :
                 # or ch is some other vaid first character
                 # for an identifier
