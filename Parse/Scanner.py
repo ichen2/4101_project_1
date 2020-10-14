@@ -43,9 +43,11 @@ class Scanner:
             if ch == "":
                 return None
 
+            # Skip empty space
             elif ch == "\n" or ch == " ":
                 return self.getNextToken()
 
+            # Skip comments 
             elif ch == ";":                
                 while(not ch == "\n"):
                     ch = self.read()
@@ -98,12 +100,12 @@ class Scanner:
     
             # Identifiers
             # TODO: this elif statement is just a placeholder. identifiers can start with more than letters, so we'll have to change it to check for those.
-            elif ch >= 'A' and ch <= 'Z':
+            elif (ch >= 'A' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or ch == '!' or ch == '$' or ch ==  '%' or ch ==  '&' or ch == '*' or ch =='+' or ch == '-' or ch == '.' or ch == '/' or ch == ':' or ch == '<' or ch ==  '=' or ch == '>' or ch == '?' or ch == '@' or ch == '^'  or ch == '_' or ch == '~' :
                 # or ch is some other vaid first character
                 # for an identifier
-                self.buf = []
+                self.buf = [ch]
                 p = self.peek()
-                while p >= 'A' and p <= 'z':
+                while (p >= 'A' and p <= 'Z') or (p >= 'a' and p <= 'z') or p == '!' or p == '$' or p ==  '%' or p ==  '&' or p == '*' or p =='+' or p == '-' or p == '.' or p == '/' or p == ':' or p == '<' or p ==  '=' or p == '>' or p == '?' or p == '@' or p == '^'  or p == '_' or p == '~' :
                     self.buf += self.read()
                     p = self.peek()
                 self.ch_buf = None
