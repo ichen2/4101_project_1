@@ -46,18 +46,18 @@ class Parser:
 
     def parseExp(self):
         # TODO: write code for parsing an exp
-        tok = self.scanner.getNextToken()
-        return self.__parseExp(tok)
+        tok = self.scanner.getNextToken();
+        return self.__parseExp(tok);
 
 
 
     def __parseExp(self, tok):
         if tok == None:
-            return None #is this for Nil?
-        elif tok.getType() == TokenType.Quote:
+            return Nil() #is this for Nil?
+        if tok.getType() == TokenType.QUOTE:
             return Cons(Ident("\'"), parseExp()); #not sure if correct
         elif tok.getType() == TokenType.LPAREN:
-            return parseRest();
+            return self.parseRest();
        # elif tok.getType() == TokenType.RPAREN: #when would exp have a right paren
             #finish
        # elif tok.getType() == TokenType.DOT: #It is not in Github
@@ -78,7 +78,29 @@ class Parser:
 
     def parseRest(self):
         # TODO: write code for parsing a rest
-        return None
+        tok = self.scanner.getNextToken();
+        return self.__parseRest(tok);
+
+    def __parseRest(self, tok):
+        
+        if tok == None:
+            return None #is this for Nil?
+        if tok.getType() == TokenType.RPAREN:
+            return Nil();
+        tok2 = self.scanner.getNextToken(); #may need to get ride of the selfs on the parses.  Don't know if parser works because the scanner doesn't work with RPAREN
+        if tok.getType() == TokenType.LPAREN:
+            if tok2.getType() == TokenType.RPAREN:
+                return Cons(Nil(), self.parseRest());
+            else:
+                return Cons(Cons(self.__parseExp(tok2), self.parseRest()), self.parseRest());
+        if tok2.getType() == TokenType.DOT:
+            return Cons(self.__parseExp(tok), self.parseExp());
+        elif tok2.getType() == TokenType.RPAREN:
+            return Cons(self.__parseExp(tok), Nil());
+        else:
+            return Cons(self.__parseExp(tok), Cons(self.__parseExp(tok2), self.parseRest()));
+
+
 
     # TODO: Add any additional methods you might need
 
