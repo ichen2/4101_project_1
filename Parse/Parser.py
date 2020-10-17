@@ -55,23 +55,24 @@ class Parser:
         if tok == None:
             return None #is this for Nil?
         elif tok.getType() == TokenType.Quote:
-            return new Cons(Ident("\'"), parseExp()); #not sure if correct
+            return Cons(Ident("\'"), parseExp()); #not sure if correct
         elif tok.getType() == TokenType.LPAREN:
             return parseRest();
-        elif tok.getType() == TokenType.RPAREN: #when would exp have a right paren
+       # elif tok.getType() == TokenType.RPAREN: #when would exp have a right paren
             #finish
-        elif tok.getType() == TokenType.DOT:
+       # elif tok.getType() == TokenType.DOT: #It is not in Github
             #finish
         elif tok.getType() == TokenType.IDENT:
             return Ident(tok.getName()); #params are wrong, it needs to just be one Node.  How do we make things Nodes?????
         elif tok.getType() == TokenType.TRUE:
             return BoolLit.getInstance(True);
-        elif tok.getType() == TokenType.INT:
-            return IntLit.getInstance(True);
-        elif tok.getType() == TokenType.STR:
-            #finish
         elif tok.getType() == TokenType.FALSE:
-            return BoolLit.getInstance(False);
+            return BoolLit.getInstance(False);    
+        elif tok.getType() == TokenType.INT:
+            return IntLit(tok.getIntVal()); #figure out how nodes work
+        elif tok.getType() == TokenType.STR:
+            return StringLit(tok.getStringVal()); #figure out how nodes work
+        
         #Don't know what the else should be
 
 
