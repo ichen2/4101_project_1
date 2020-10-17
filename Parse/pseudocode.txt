@@ -1,0 +1,28 @@
+Pseudocode for Parser
+
+parseExp()
+    if(getNextToken = LPAREN)
+        return parseRest())
+    elif(getNextToken = FALSE)
+        return Node(FALSE)
+    elif(getNextToken = TRUE)
+        return Node(TRUE)
+    elif(getNextToken = QUOTE)
+        return Cons(Node(QUOTE),parseExp())
+    elif(getNextToken = INT)
+        return Node(INT)
+    elif(getNextToken = STRING)
+        return Node(STRING)
+    elif(getNextToken = IDENT)
+        return Node(IDENT)
+    else
+        error
+
+parseRest()
+    if(getNextToken = RPAREN)
+        return Nil()
+    elif(getNextToken = exp)
+        if(getNextToken = DOT)
+            return parseExp()
+        else
+            return parseRest()

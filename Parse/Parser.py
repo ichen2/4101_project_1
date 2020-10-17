@@ -43,12 +43,52 @@ class Parser:
         self.scanner = s
 
     def parseExp(self):
-        # TODO: write code for parsing an exp
-        return None
+        tok = self.scanner.getNextToken()
+        return parseExp(tok)
+
+    def parseExp(self,token1):
+        if(token1 == None):
+            return Nil
+        type1 = token1.getType()
+        if(type1 == TokenType.LPAREN):
+            return parseRest()
+        elif(type1 == TokenType.FALSE):
+            return BoolLit(False)
+        elif(type1 == TokenType.TRUE):
+            return BoolLit(True)
+        elif(type1 == TokenType.QUOTE):
+            return Cons(Ident("\'"),parseExp())
+        elif(type1 == TokenType.INT):
+            return IntLit(token1.getIntVal())
+        elif(type1 == TokenType.STRING):
+            return StrLit(token1.getIntVal())
+        elif(type1 == TokenType.IDENT):
+            return Ident(token1.getName())
+        else:
+            self.error("Token did not match any of the given types")
+            return None
 
     def parseRest(self):
-        # TODO: write code for parsing a rest
-        return None
+        tok = self.scanner.getNextToken()
+        return parseRest(tok)
+
+    def parseRest(self,token1):
+        type1 = token1.getType()
+        if(type1 == TokenType.RPAREN):
+            return Nil
+        token2 = self.scanner.getNextToken()
+        type2 = token2.getType()
+        if(type1 == TokenType.LPAREN):
+            if(type2 == TokenType.RPAREN):
+                return Cons(Nil,parseRest()) 
+            else:
+                return Cons(Cons(parseExp(token2),parseRest()),parseRest())
+        if(type2 == TokenType.DOT):
+            return Cons(parseExp(token1,parseExp()))
+        elif(type2 == TokenType.RPAREN):
+            return Cons(parseExp(token1),Nil)
+        else:
+            return Cons(parseExp(token1),Cons(parseExp(token2),parseRest()))
 
     # TODO: Add any additional methods you might need
 

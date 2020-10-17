@@ -105,7 +105,6 @@ class Scanner:
                 while (p >= 'A' and p <= 'Z') or (p >= 'a' and p <= 'z') or p == '!' or p == '$' or p ==  '%' or p ==  '&' or p == '*' or p =='+' or p == '-' or p == '.' or p == '/' or p == ':' or p == '<' or p ==  '=' or p == '>' or p == '?' or p == '@' or p == '^'  or p == '_' or p == '~' :
                     self.buf += self.read()
                     p = self.peek()
-                self.ch_buf = None
                 # make sure that the character following the identifier
                 # is not removed from the input stream
                 return IdentToken("".join(self.buf))
