@@ -26,6 +26,13 @@ class Cons(Node):
 
     def print(self, n, p=False):
         self.form.print(self, n, p)
+    
+    def simplePrint(self):
+        self.car.simplePrint()
+        self.cdr.simplePrint()
+
+    def isPair(self):           
+        return True
 
 if __name__ == "__main__":
     c = Cons(Ident("Hello"), Ident("World"))

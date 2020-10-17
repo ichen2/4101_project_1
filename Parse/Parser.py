@@ -43,64 +43,57 @@ class Parser:
 
     def __init__(self, s):
         self.scanner = s
+        self.nodeFalse = BoolLit(False)
+        self.nodeTrue = BoolLit(True)
+        self.nodeNil = Nil()
 
     def parseExp(self):
-        # TODO: write code for parsing an exp
-        tok = self.scanner.getNextToken();
-        return self.__parseExp(tok);
+        tok = self.scanner.getNextToken()
+        return self.parseExpOverloaded(tok)
 
-
-
-    def __parseExp(self, tok):
-        if tok == None:
-            return Nil() #is this for Nil?
-        if tok.getType() == TokenType.QUOTE:
-            return Cons(Ident("\'"), parseExp()); #not sure if correct
-        elif tok.getType() == TokenType.LPAREN:
-            return self.parseRest();
-       # elif tok.getType() == TokenType.RPAREN: #when would exp have a right paren
-            #finish
-       # elif tok.getType() == TokenType.DOT: #It is not in Github
-            #finish
-        elif tok.getType() == TokenType.IDENT:
-            return Ident(tok.getName()); #params are wrong, it needs to just be one Node.  How do we make things Nodes?????
-        elif tok.getType() == TokenType.TRUE:
-            return BoolLit.getInstance(True);
-        elif tok.getType() == TokenType.FALSE:
-            return BoolLit.getInstance(False);    
-        elif tok.getType() == TokenType.INT:
-            return IntLit(tok.getIntVal()); #figure out how nodes work
-        elif tok.getType() == TokenType.STR:
-            return StringLit(tok.getStringVal()); #figure out how nodes work
-        
-        #Don't know what the else should be
-
+    def parseExpOverloaded(self,token1):
+        if(token1 == None):
+            return self.nodeNil
+        type1 = token1.getType()
+        if(type1 == TokenType.LPAREN):
+            return self.parseRest()
+        elif(type1 == TokenType.FALSE):
+            return self.nodeFalse
+        elif(type1 == TokenType.TRUE):
+            return self.nodeTrue
+        elif(type1 == TokenType.QUOTE):
+            return Cons(Ident("\'"),self.parseExp())
+        elif(type1 == TokenType.INT):
+            return IntLit(token1.getIntVal())
+        elif(type1 == TokenType.STR):
+            return StrLit(token1.getStrVal())
+        elif(type1 == TokenType.IDENT):
+            return Ident(token1.getName())
+        else:
+            self.error("Token did not match any of the given types")
+            return None
 
     def parseRest(self):
-        # TODO: write code for parsing a rest
-        tok = self.scanner.getNextToken();
-        return self.__parseRest(tok);
+        tok = self.scanner.getNextToken()
+        return self.parseRestOverloaded(tok)
 
-    def __parseRest(self, tok):
-        
-        if tok == None:
-            return None #is this for Nil?
-        if tok.getType() == TokenType.RPAREN:
-            return Nil();
-        tok2 = self.scanner.getNextToken(); #may need to get ride of the selfs on the parses.  Don't know if parser works because the scanner doesn't work with RPAREN
-        if tok.getType() == TokenType.LPAREN:
-            if tok2.getType() == TokenType.RPAREN:
-                return Cons(Nil(), self.parseRest());
+    def parseRestOverloaded(self,token1):
+        type1 = token1.getType()
+        if(type1 == TokenType.RPAREN):
+            return self.nodeNil
+        token2 = self.scanner.getNextToken()
+        type2 = token2.getType()
+        if(type1 == TokenType.LPAREN):
+            if(type2 == TokenType.RPAREN):
+                return Cons(self.nodeNil,self.parseRest()) 
             else:
-                return Cons(Cons(self.__parseExp(tok2), self.parseRest()), self.parseRest());
-        if tok2.getType() == TokenType.DOT:
-            return Cons(self.__parseExp(tok), self.parseExp());
-        elif tok2.getType() == TokenType.RPAREN:
-            return Cons(self.__parseExp(tok), Nil());
+                return Cons(Cons(self.parseExpOverloaded(token2),self.parseRest()),self.parseRest())
+        if(type2 == TokenType.DOT):
+            return Cons(self.parseExpOverloaded(token1),self.parseExp())
+        elif(type2 == TokenType.RPAREN):
+            return Cons(self.parseExpOverloaded(token1),self.nodeNil)
         else:
-            return Cons(self.__parseExp(tok), Cons(self.__parseExp(tok2), self.parseRest()));
-
-
+            return Cons(self.parseExpOverloaded(token1),Cons(self.parseExpOverloaded(token2),self.parseRest()))
 
     # TODO: Add any additional methods you might need
 
