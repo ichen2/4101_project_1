@@ -1,5 +1,5 @@
 # SPP -- The main program of the Scheme pretty printer
-# Ian's branch
+# Master branch
 
 import sys
 from Parse import *
