@@ -29,6 +29,7 @@ class Cons(Node):
     
     def simplePrint(self):
         self.car.simplePrint()
+        print("Cons")
         self.cdr.simplePrint()
 
     def isPair(self):           
