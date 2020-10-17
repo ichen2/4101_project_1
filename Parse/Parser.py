@@ -39,6 +39,8 @@ from Tokens import TokenType
 from Tree import *
 
 class Parser:
+
+
     def __init__(self, s):
         self.scanner = s
         self.nodeFalse = BoolLit(False)
