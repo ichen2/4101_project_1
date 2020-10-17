@@ -39,12 +39,41 @@ from Tokens import TokenType
 from Tree import *
 
 class Parser:
+
+
     def __init__(self, s):
         self.scanner = s
 
     def parseExp(self):
         # TODO: write code for parsing an exp
-        return None
+        tok = self.scanner.getNextToken()
+        return self.__parseExp(tok)
+
+
+
+    def __parseExp(self, tok):
+        if tok == None:
+            return None #is this for Nil?
+        elif tok.getType() == TokenType.Quote:
+            return new Cons(Ident("\'"), parseExp()); #not sure if correct
+        elif tok.getType() == TokenType.LPAREN:
+            return parseRest();
+        elif tok.getType() == TokenType.RPAREN: #when would exp have a right paren
+            #finish
+        elif tok.getType() == TokenType.DOT:
+            #finish
+        elif tok.getType() == TokenType.IDENT:
+            return Ident(tok.getName()); #params are wrong, it needs to just be one Node.  How do we make things Nodes?????
+        elif tok.getType() == TokenType.TRUE:
+            return BoolLit.getInstance(True);
+        elif tok.getType() == TokenType.INT:
+            return IntLit.getInstance(True);
+        elif tok.getType() == TokenType.STR:
+            #finish
+        elif tok.getType() == TokenType.FALSE:
+            return BoolLit.getInstance(False);
+        #Don't know what the else should be
+
 
     def parseRest(self):
         # TODO: write code for parsing a rest
