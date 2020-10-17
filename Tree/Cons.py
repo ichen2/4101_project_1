@@ -20,16 +20,37 @@ class Cons(Node):
     # object from the Special hierarchy and to leave the rest of
     # parsing up to the interpreter.
     def parseList(self):
-        # TODO: implement this function and any helper functions
-        # you might need
-        self.form = None
+        if(self.car.isSymbol()):
+            t = self.car.getName()
+            if(t == "\'"):
+                self.form = Quote()
+            elif(t == "quote"):
+                self.form = Quote()
+            elif(t == "lambda"):
+                self.form = Lambda()
+            elif(t == "begin"):
+                self.form = Begin()
+            elif(t == "if"):
+                self.form = If()
+            elif(t == "let"):
+                self.form = Let()
+            elif(t == "cond"):
+                self.form = Cond()
+            elif(t == "define"):
+                self.form = Define()
+            elif(t == "set!"):
+                self.form = Set()
+            else:
+                self.form = Regular()
+        else:
+            self.form = Regular()
 
     def print(self, n, p=False):
         self.form.print(self, n, p)
     
     def simplePrint(self):
         self.car.simplePrint()
-        print("Cons")
+        print(self.form)
         self.cdr.simplePrint()
 
     def isPair(self):           

@@ -6,6 +6,9 @@ from Tree import Node
 class Ident(Node):
     def __init__(self, n):
         self.name = n
+    
+    def getName(self):
+        return self.name
 
     def print(self, n, p=False):
         # There got to be a more efficient way to print n spaces.
