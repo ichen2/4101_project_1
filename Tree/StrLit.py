@@ -13,6 +13,12 @@ class StrLit(Node):
             sys.stdout.write(' ')
         sys.stdout.write("\"" + self.strVal + "\"\n")
 
+    def isString(self):         
+        return True
+
+    def simplePrint(self):
+        print(self.strVal)
+
 if __name__ == "__main__":
     id = StrLit("foo")
     id.print(0)

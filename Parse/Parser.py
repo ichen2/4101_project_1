@@ -41,27 +41,30 @@ from Tree import *
 class Parser:
     def __init__(self, s):
         self.scanner = s
+        self.nodeFalse = BoolLit(False)
+        self.nodeTrue = BoolLit(True)
+        self.nodeNil = Nil()
 
     def parseExp(self):
         tok = self.scanner.getNextToken()
-        return parseExp(tok)
+        return self.parseExpOverloaded(tok)
 
-    def parseExp(self,token1):
+    def parseExpOverloaded(self,token1):
         if(token1 == None):
-            return Nil
+            return self.nodeNil
         type1 = token1.getType()
         if(type1 == TokenType.LPAREN):
-            return parseRest()
+            return self.parseRest()
         elif(type1 == TokenType.FALSE):
-            return BoolLit(False)
+            return self.nodeFalse
         elif(type1 == TokenType.TRUE):
-            return BoolLit(True)
+            return self.nodeTrue
         elif(type1 == TokenType.QUOTE):
-            return Cons(Ident("\'"),parseExp())
+            return Cons(Ident("\'"),self.parseExp())
         elif(type1 == TokenType.INT):
             return IntLit(token1.getIntVal())
-        elif(type1 == TokenType.STRING):
-            return StrLit(token1.getIntVal())
+        elif(type1 == TokenType.STR):
+            return StrLit(token1.getStrVal())
         elif(type1 == TokenType.IDENT):
             return Ident(token1.getName())
         else:
@@ -70,25 +73,25 @@ class Parser:
 
     def parseRest(self):
         tok = self.scanner.getNextToken()
-        return parseRest(tok)
+        return self.parseRestOverloaded(tok)
 
-    def parseRest(self,token1):
+    def parseRestOverloaded(self,token1):
         type1 = token1.getType()
         if(type1 == TokenType.RPAREN):
-            return Nil
+            return self.nodeNil
         token2 = self.scanner.getNextToken()
         type2 = token2.getType()
         if(type1 == TokenType.LPAREN):
             if(type2 == TokenType.RPAREN):
-                return Cons(Nil,parseRest()) 
+                return Cons(self.nodeNil,self.parseRest()) 
             else:
-                return Cons(Cons(parseExp(token2),parseRest()),parseRest())
+                return Cons(Cons(self.parseExpOverloaded(token2),self.parseRest()),self.parseRest())
         if(type2 == TokenType.DOT):
-            return Cons(parseExp(token1,parseExp()))
+            return Cons(self.parseExpOverloaded(token1),self.parseExp())
         elif(type2 == TokenType.RPAREN):
-            return Cons(parseExp(token1),Nil)
+            return Cons(self.parseExpOverloaded(token1),self.nodeNil)
         else:
-            return Cons(parseExp(token1),Cons(parseExp(token2),parseRest()))
+            return Cons(self.parseExpOverloaded(token1),Cons(self.parseExpOverloaded(token2),self.parseRest()))
 
     # TODO: Add any additional methods you might need
 
