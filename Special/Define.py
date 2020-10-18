@@ -23,7 +23,7 @@ class Define(Special):
         if(isVar):
             sys.stdout.write(" ")
             sys.stdout.flush()
-            t.cdr.cdr.car.print(n,True)
+            t.cdr.cdr.car.print(n,False)
         else:
             if(t.cdr.cdr.car.isPair()):
                 t.cdr.cdr.car.print(n+4,False,True)

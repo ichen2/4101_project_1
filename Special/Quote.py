@@ -16,9 +16,7 @@ class Quote(Special):
                 sys.stdout.write(' ')
         sys.stdout.write("\'")
         sys.stdout.flush()
-        if(t.cdr.isPair()):            
-            t.cdr.print(n,False)
-        elif(t.cdr.isNull()):
+        if(t.cdr.isPair() or t.cdr.isNull()):            
             t.cdr.print(n,False)
         else:
             t.cdr.print(n,True)

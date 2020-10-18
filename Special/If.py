@@ -16,7 +16,7 @@ class If(Special):
                 sys.stdout.write(' ')
         sys.stdout.write("(if ")
         sys.stdout.flush()
-        t.cdr.car.print(n, True)
+        t.cdr.car.print(n, False)
         if(t.cdr.cdr.car.isPair()):
             t.cdr.cdr.car.print(n+4,False,True)
         else:  
