@@ -8,33 +8,35 @@ class Define(Special):
     def __init__(self):
         pass
 
-    def print(self, t, n, p, newLine = False):
-        if(p):
-            if(not newLine):
-                sys.stdout.write(" ")
-                sys.stdout.flush()
-            else:
+    def print(self, t, n, parenPrinted, newLine = False):
+        isVar = True
+        if(newLine):
+            sys.stdout.write("\n")
+            sys.stdout.flush()
+            for _ in range(n):
+                sys.stdout.write(' ')
+        sys.stdout.write("(define ")
+        sys.stdout.flush()
+        if(t.cdr.car.isPair()):
+            isVar = False
+        t.cdr.car.print(n, False)
+        if(isVar):
+            sys.stdout.write(" ")
+            sys.stdout.flush()
+            t.cdr.cdr.car.print(n,True)
+        else:
+            if(t.cdr.cdr.car.isPair()):
+                t.cdr.cdr.car.print(n+4,False,True)
+            else:  
                 sys.stdout.write("\n")
                 sys.stdout.flush()
-        else:
-            sys.stdout.write("(")
-            sys.stdout.flush()
-        t.car.print(n,not t.car.isPair())
-        if(t.cdr.car.isPair()):
-            t.cdr.car.print(n, False)
+                for _ in range(n+4):
+                    sys.stdout.write(' ')
+                t.cdr.cdr.car.print(n+4,False,True)
+        if(not isVar):
             sys.stdout.write("\n")
-            sys.stdout.flush()
-            t.cdr.cdr.car.print(n+4, False)
-            sys.stdout.write("\n")
-            sys.stdout.flush()
-        # if(t.cdr.isPair()):
-        #     t.cdr.print(n,True)
-        # elif(t.cdr.isNull()):
-        #     t.cdr.print(n,True)
-        #     #sys.stdout.write(")")
-        #     #sys.stdout.flush()
-        # else:
-        #     sys.stdout.write(" . ")
-        #     t.cdr.print(n,True)
-        #     sys.stdout.write(")")
-        #     sys.stdout.flush()
+            for _ in range(n):
+                sys.stdout.write(' ')
+        sys.stdout.write(")")
+        sys.stdout.flush()
+        

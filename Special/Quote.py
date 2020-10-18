@@ -12,7 +12,7 @@ class Quote(Special):
         if(newLine):
             sys.stdout.write("\n")
             sys.stdout.flush()
-            for _ in range(n):
+            for x in range(n):
                 sys.stdout.write(' ')
         sys.stdout.write("\'")
         sys.stdout.flush()
