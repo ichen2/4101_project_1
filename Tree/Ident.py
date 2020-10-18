@@ -14,7 +14,7 @@ class Ident(Node):
         # There got to be a more efficient way to print n spaces.
         for _ in range(n):
             sys.stdout.write(' ')
-        sys.stdout.write(self.name +'\n')
+        sys.stdout.write(self.name) #+'\n')
 
     def isSymbol(self):         
         return True

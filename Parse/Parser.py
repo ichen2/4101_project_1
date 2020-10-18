@@ -86,8 +86,15 @@ class Parser:
                 return Cons(self.nodeNil,self.parseRest()) 
             else:
                 return Cons(Cons(self.parseExpOverloaded(token2),self.parseRest()),self.parseRest())
+        elif(type1 == TokenType.DOT):
+            c = self.parseExpOverloaded(token2)
+            self.parseRest()
+            return c
         if(type2 == TokenType.DOT):
-            return Cons(self.parseExpOverloaded(token1),self.parseExp())
+            # return Cons(self.parseExpOverloaded(token1),self.parseExp())
+            c = Cons(self.parseExpOverloaded(token1),self.parseExp())
+            self.parseRest()
+            return c
         elif(type2 == TokenType.RPAREN):
             return Cons(self.parseExpOverloaded(token1),self.nodeNil)
         else:
