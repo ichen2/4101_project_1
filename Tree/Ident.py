@@ -10,10 +10,10 @@ class Ident(Node):
     def getName(self):
         return self.name
 
-    def print(self, n, p=False, newLine = False):
+    def print(self, n, parenPrinted=False, newLine = False):
         # There got to be a more efficient way to print n spaces.
-        for _ in range(n):
-            sys.stdout.write(' ')
+        #for _ in range(n):
+        #    sys.stdout.write(' ')
         sys.stdout.write(self.name) #+'\n')
 
     def isSymbol(self):         

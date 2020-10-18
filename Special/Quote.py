@@ -7,16 +7,19 @@ class Quote(Special):
     # TODO: Add fields and modify the constructor as needed.
     def __init__(self):
         pass
-
-    def print(self, t, n, p, newLine = False):        
-        if(t.cdr.isPair()):
+       
+    def print(self, t, n, parenPrinted, newLine = False):
+        if(newLine):
+            sys.stdout.write("\n")
+            sys.stdout.flush()
+            for _ in range(n):
+                sys.stdout.write(' ')
+        sys.stdout.write("\'")
+        sys.stdout.flush()
+        if(t.cdr.isPair()):            
             t.cdr.print(n,False)
         elif(t.cdr.isNull()):
-            t.cdr.print(n,True)
-            #sys.stdout.write(")")
-            #sys.stdout.flush()
+            t.cdr.print(n,False)
         else:
-            sys.stdout.write(" . ")
             t.cdr.print(n,True)
-            sys.stdout.write(")")
-            sys.stdout.flush()
+
