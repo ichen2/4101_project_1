@@ -8,5 +8,5 @@ from abc import ABC, abstractmethod
 
 class Special(ABC):
     @abstractmethod
-    def print(self, t, n, p):
+    def print(self, t, n, p, newLine = False):
         pass

@@ -10,7 +10,7 @@ class Ident(Node):
     def getName(self):
         return self.name
 
-    def print(self, n, p=False):
+    def print(self, n, p=False, newLine = False):
         # There got to be a more efficient way to print n spaces.
         for _ in range(n):
             sys.stdout.write(' ')

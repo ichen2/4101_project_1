@@ -88,6 +88,19 @@ class Scanner:
                 self.ch_buf = None
                 return StrToken("".join(self.buf))
 
+            # Identifiers
+            elif (ch >= 'A' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or ch == '!' or ch == '$' or ch ==  '%' or ch ==  '&' or ch == '*' or ch =='+' or ch == '-' or ch == '.' or ch == '/' or ch == ':' or ch == '<' or ch ==  '=' or ch == '>' or ch == '?' or ch == '@' or ch == '^'  or ch == '_' or ch == '~' :
+                # or ch is some other vaid first character
+                # for an identifier
+                self.buf = [ch]
+                p = self.peek()
+                while (p >= '0' and p <= '9' ) or (p >= 'A' and p <= 'Z') or (p >= 'a' and p <= 'z') or p == '!' or p == '$' or p ==  '%' or p ==  '&' or p == '*' or p =='+' or p == '-' or p == '.' or p == '/' or p == ':' or p == '<' or p ==  '=' or p == '>' or p == '?' or p == '@' or p == '^'  or p == '_' or p == '~' :
+                    self.buf += self.read()
+                    p = self.peek()
+                # make sure that the character following the identifier
+                # is not removed from the input stream
+                return IdentToken("".join(self.buf))
+
             # Integer constants
             elif self.isDigit(ch):
                 i = ord(ch) - ord('0')
@@ -95,19 +108,6 @@ class Scanner:
                     i = i * 10
                     i +=  ord(self.read()) - ord('0')
                 return IntToken(i)
-    
-            # Identifiers
-            elif (ch >= 'A' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or ch == '!' or ch == '$' or ch ==  '%' or ch ==  '&' or ch == '*' or ch =='+' or ch == '-' or ch == '.' or ch == '/' or ch == ':' or ch == '<' or ch ==  '=' or ch == '>' or ch == '?' or ch == '@' or ch == '^'  or ch == '_' or ch == '~' :
-                # or ch is some other vaid first character
-                # for an identifier
-                self.buf = [ch]
-                p = self.peek()
-                while (p >= 'A' and p <= 'Z') or (p >= 'a' and p <= 'z') or p == '!' or p == '$' or p ==  '%' or p ==  '&' or p == '*' or p =='+' or p == '-' or p == '.' or p == '/' or p == ':' or p == '<' or p ==  '=' or p == '>' or p == '?' or p == '@' or p == '^'  or p == '_' or p == '~' :
-                    self.buf += self.read()
-                    p = self.peek()
-                # make sure that the character following the identifier
-                # is not removed from the input stream
-                return IdentToken("".join(self.buf))
 
             # Illegal character
             else:

@@ -45,8 +45,8 @@ class Cons(Node):
         else:
             self.form = Regular()
 
-    def print(self, n, p=False):
-        self.form.print(self, n, p)
+    def print(self, n, p=False,newLine = False):
+        self.form.print(self, n, p, newLine)
     
     def simplePrint(self):
         self.car.simplePrint()

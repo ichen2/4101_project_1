@@ -34,14 +34,14 @@ class BoolLit(Node):
     def isBool(self):
         return True
 
-    def print(self, n, p=False):
+    def print(self, n, p=False, newLine = False):
         # There got to be a more efficient way to print n spaces.
         for _ in range(n):
             sys.stdout.write(' ')
         if self.boolVal:
-            sys.stdout.write("#t\n")
+            sys.stdout.write("#t")
         else:
-            sys.stdout.write("#f\n")
+            sys.stdout.write("#f")
     
     def simplePrint(self):
         print(self.boolVal)

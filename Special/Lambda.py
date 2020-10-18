@@ -7,6 +7,6 @@ class Lambda(Special):
     def __init__(self):
         pass
 
-    def print(self, t, n, p):
+    def print(self, t, n, p, newLine = False):
         # TODO: Implement this function.
         pass

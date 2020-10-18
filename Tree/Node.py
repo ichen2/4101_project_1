@@ -23,13 +23,13 @@ class Node(ABC):
     # make sure that you define the method print in all the appropriate
     # subclasses of Node as well.
     @abstractmethod
-    def print(self, n, p=False):
+    def print(self, n, p=False, newLine = False):
         pass
     
     @abstractmethod
     def simplePrint(self):
         pass
-    
+
     # For parsing Cons nodes, for printing trees, and later for
     # evaluating them, we need some helper functions that test
     # the type of a node and that extract some information.
